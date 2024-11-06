@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <div id="btnclass">
+    </div>
+  </body>
+  <style>
+    .image-css {
+      width: 50px;
+      height: 60px;
+      border-radius: 4px;
+  }
+  .para{
+      display: flex;
+      margin-left: 22px;
+  }
+  </style>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">sno</th>
+            <th scope="col">Title</th>
+            <th scope="col">Disc</th>
+            <th scope="col">Product Image</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Language</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in data %}
+<tr>
+  <th scope="">{{ forloop.counter }}</th>
+  <td>{{i.title}}</td>
+  <td>{{i.disc}}</td>
+  <td>
+    <p class="para">
+
+    {% if i.product_image %}
+      <img src="{{ i.product_image.url }}" class="image-css"></p>
+      {% else %}
+      <p>No image available.</p>
+    {% endif %}
+  </td>
+  <td>{{i.category}}</td>
+  <td>{{i.price}}</td>
+  <td>{{i.language}}</td>
+  <td>
+    <form method="post" action="{% url 'add-to-cart' i.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="product_id" value="{{ i.id }}">
+      <button type="submit" class="btn btn-primary">Add To Cart</button>
+    </form>
+  </td>
+</tr>
+{% endfor %}
+        </tbody>  
+      </table>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
